@@ -7,6 +7,7 @@
   @dragend.prevent="leave"
   @dragdrop.prevent="drop"
   >
+  {{ isDraggedOver }}
       <input type="file" name="files[]" id="file" class="dnd__input" multiple>
       <label for="file" class="dnd__label">
           <strong>
@@ -23,6 +24,17 @@ export default {
       files: [],
       isDraggedOver: false,
     };
+  },
+  methods: {
+    enter() {
+      this.isDraggedOver = true;
+    },
+    leave() {
+      this.isDraggedOver = false;
+    },
+    drop() {
+      this.leave();
+    },
   },
 };
 </script>
