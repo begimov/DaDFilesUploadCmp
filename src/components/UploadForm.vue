@@ -1,5 +1,12 @@
 <template>
-  <div class="dnd">
+  <div
+  class="dnd"
+  @dragover.prevent="enter"
+  @dragenter.prevent="enter"
+  @dragleave.prevent="leave"
+  @dragend.prevent="leave"
+  @dragdrop.prevent="drop"
+  >
       <input type="file" name="files[]" id="file" class="dnd__input" multiple>
       <label for="file" class="dnd__label">
           <strong>
@@ -11,33 +18,38 @@
 
 <script>
 export default {
-  //
+  data() {
+    return {
+      files: [],
+      isDraggedOver: false,
+    };
+  },
 };
 </script>
 
 <style scoped>
-    .dnd {
-        --dnd-min-height: 200px;
-        width: 100%;
-        min-height: var(--dnd-min-height);
-        background-color: #F9F9F9;
-        position: relative;
-        border: 2px dashed #DDD;
-    }
-    .dnd__input {
-        display: none;
-    }
-    .dnd__label {
-        display: block;
-        text-align: center;
-        margin: calc(var(--dnd-min-height) / 2) 20px;
-    }
-    .dnd__label:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    .dnd__label--compact {
-        margin: calc(var(--dnd-min-height) / 4) 20px;
-    }
+.dnd {
+  --dnd-min-height: 200px;
+  width: 100%;
+  min-height: var(--dnd-min-height);
+  background-color: #f9f9f9;
+  position: relative;
+  border: 2px dashed #ddd;
+}
+.dnd__input {
+  display: none;
+}
+.dnd__label {
+  display: block;
+  text-align: center;
+  margin: calc(var(--dnd-min-height) / 2) 20px;
+}
+.dnd__label:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.dnd__label--compact {
+  margin: calc(var(--dnd-min-height) / 4) 20px;
+}
 </style>
 
