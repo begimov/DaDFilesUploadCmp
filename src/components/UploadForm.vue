@@ -5,7 +5,8 @@
   @dragenter.prevent="enter"
   @dragleave.prevent="leave"
   @dragend.prevent="leave"
-  @dragdrop.prevent="drop"
+  @drop.prevent="drop"
+  v-bind:class="{ 'dnd--dragged': isDraggedOver }"
   >
   {{ isDraggedOver }}
       <input type="file" name="files[]" id="file" class="dnd__input" multiple>
@@ -47,6 +48,9 @@ export default {
   background-color: #f9f9f9;
   position: relative;
   border: 2px dashed #ddd;
+}
+.dnd--dragged {
+  border-color: #333;
 }
 .dnd__input {
   display: none;
