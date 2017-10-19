@@ -36,5 +36,8 @@ export default {
         text-decoration: underline;
         cursor: pointer;
     }
+    .dnd__label--compact {
+        margin: calc(var(--dnd-min-height) / 4) 20px;
+    }
 </style>
 
