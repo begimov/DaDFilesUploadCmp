@@ -52,7 +52,14 @@ export default {
     storeMeta(file) {
         // create file object
         return new Promise((resolve, reject) => {
-            //
+            this.$http.post('http://localhost:8080/vueupload/store.php', {
+                name: file.name
+            }).then((res) => {
+                // set id on file object
+                // resolve
+            }, () => {
+                // reject
+            });
         });
     }
   }
