@@ -41,49 +41,52 @@ export default {
       this.addFiles(this.$refs.fileInput.files);
     },
     addFiles(files) {
-      Array.from(files).forEach(function(file) {
+      Array.from(files).forEach((file) => {
         this.storeMeta(file).then(
           fileObject => {
             // upload
+            console.log(fileObject);
           },
           fileObject => {
-            // failed
+            console.log(fileObject);
           }
         );
       });
     },
     storeMeta(file) {
-      // create file object
+      const fileObj = this.generateFileObj(file);
+
       return new Promise((resolve, reject) => {
         this.$http
-          .post("http://localhost:8080/vueupload/store.php", {
+          .post("http://localhost:8000/store.php", {
             name: file.name
           })
           .then(
             res => {
-              // set id on file object
-              // resolve
+              fileObj.id = res.body.data.id;
+              resolve(fileObj);
             },
             () => {
-              // reject
+              reject(fileObj);
             }
           );
       });
     },
     generateFileObj(file) {
-      const fileObjIndex = this.files.push({
-        id: null,
-        file: file,
-        progress: 0,
-        failed: false,
-        loadedBytes: 0,
-        totalBytes: 0,
-        timeStarted: new Date().getTime(),
-        secondsRemaining: 0,
-        finished: false,
-        cancelled: false,
-        xhr: null
-      }) - 1;
+      const fileObjIndex =
+        this.files.push({
+          id: null,
+          file: file,
+          progress: 0,
+          failed: false,
+          loadedBytes: 0,
+          totalBytes: 0,
+          timeStarted: new Date().getTime(),
+          secondsRemaining: 0,
+          finished: false,
+          cancelled: false,
+          xhr: null
+        }) - 1;
       return this.files[fileObjIndex];
     }
   }
