@@ -9,7 +9,7 @@
   v-bind:class="{ 'dnd--dragged': isDraggedOver }"
   >
   {{ isDraggedOver }}
-      <input type="file" name="files[]" id="file" class="dnd__input" multiple>
+      <input type="file" name="files[]" id="file" class="dnd__input" multiple v-on:change="selected" ref="fileInput">
       <label for="file" class="dnd__label">
           <strong>
               Перенесите сюда файлы или кликните, чтобы их выбрать 
@@ -33,8 +33,12 @@ export default {
     leave() {
       this.isDraggedOver = false;
     },
-    drop() {
+    drop(e) {
       this.leave();
+      console.log(e.dataTransfer.files);
+    },
+    selected(e) {
+      console.log(this.$refs.fileInput.files);
     },
   },
 };
