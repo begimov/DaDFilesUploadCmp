@@ -32,5 +32,9 @@ export default {
         text-align: center;
         margin: calc(var(--dnd-min-height) / 2) 20px;
     }
+    .dnd__label:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
 </style>
 
