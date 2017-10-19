@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       files: [],
-      isDraggedOver: false,
+      isDraggedOver: false
     };
   },
   methods: {
@@ -35,12 +35,27 @@ export default {
     },
     drop(e) {
       this.leave();
-      console.log(e.dataTransfer.files);
+      this.addFiles(e.dataTransfer.files);
     },
     selected(e) {
-      console.log(this.$refs.fileInput.files);
+      this.addFiles(this.$refs.fileInput.files);
     },
-  },
+    addFiles(files) {
+      Array.from(files).forEach(function(file) {
+          this.storeMeta(file).then((fileObject) => {
+              // upload
+          }, (fileObject) => {
+              // failed
+          });
+      });
+    },
+    storeMeta(file) {
+        // create file object
+        return new Promise((resolve, reject) => {
+            //
+        });
+    }
+  }
 };
 </script>
 
