@@ -41,21 +41,36 @@ export default {
       this.addFiles(this.$refs.fileInput.files);
     },
     addFiles(files) {
-      Array.from(files).forEach((file) => {
+      Array.from(files).forEach(file => {
         this.storeMeta(file).then(
-          fileObject => {
-            // upload
-            console.log(fileObject);
+          fileObj => {
+            this.upload(fileObj);
           },
-          fileObject => {
-            console.log(fileObject);
+          fileObj => {
+            fileObj.failed = true;
           }
         );
       });
     },
+    upload(fileObj) {
+      const form = new FormData();
+      form.append("file", fileObj.file);
+      form.append("id", fileObj.id);
+
+      // emit upload event
+
+      this.$http.post("http://localhost:8000/upload.php", form, {
+        before: xhr => {
+          fileObj.xhr = xhr;
+        },
+        progress: e => {
+          // emit progress
+          console.log(e.loaded);
+        }
+      });
+    },
     storeMeta(file) {
       const fileObj = this.generateFileObj(file);
-
       return new Promise((resolve, reject) => {
         this.$http
           .post("http://localhost:8000/store.php", {
