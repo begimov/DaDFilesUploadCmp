@@ -12,10 +12,6 @@ Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
-  http: {
-    emulateJSON: true,
-    emulateHTTP: true
-  },
   el: '#app',
   template: '<App/>',
   components: { App },
