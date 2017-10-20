@@ -8,7 +8,6 @@
   @drop.prevent="drop"
   v-bind:class="{ 'dnd--dragged': isDraggedOver }"
   >
-  {{ isDraggedOver }}
       <input type="file" name="files[]" id="file" class="dnd__input" multiple v-on:change="selected" ref="fileInput">
       <label for="file" class="dnd__label">
           <strong>
@@ -58,20 +57,20 @@ export default {
       form.append("id", fileObj.id);
 
       // emit upload event
+      axios.interceptors.request.use(function(config) {
+        fileObj.xhr = config;
+        return config;
+      });
 
-      this.$http
+      axios
         .post("http://localhost:8000/upload.php", form, {
-          before: xhr => {
-            fileObj.xhr = xhr;
-          },
-          progress: e => {
+          onUploadProgress: function(e) {
             // emit progress
             console.log(e.loaded);
           }
         })
         .then(
           res => {
-            console.log(res);
             // emit finished
           },
           () => {
@@ -82,13 +81,13 @@ export default {
     storeMeta(file) {
       const fileObj = this.generateFileObj(file);
       return new Promise((resolve, reject) => {
-        this.$http
+        axios
           .post("http://localhost:8000/store.php", {
             name: file.name
           })
           .then(
             res => {
-              fileObj.id = res.body.data.id;
+              fileObj.id = res.data.data.id;
               resolve(fileObj);
             },
             () => {
