@@ -59,15 +59,25 @@ export default {
 
       // emit upload event
 
-      this.$http.post("http://localhost:8000/upload.php", form, {
-        before: xhr => {
-          fileObj.xhr = xhr;
-        },
-        progress: e => {
-          // emit progress
-          console.log(e.loaded);
-        }
-      });
+      this.$http
+        .post("http://localhost:8000/upload.php", form, {
+          before: xhr => {
+            fileObj.xhr = xhr;
+          },
+          progress: e => {
+            // emit progress
+            console.log(e.loaded);
+          }
+        })
+        .then(
+          res => {
+            console.log(res);
+            // emit finished
+          },
+          () => {
+            // emit failed
+          }
+        );
     },
     storeMeta(file) {
       const fileObj = this.generateFileObj(file);
