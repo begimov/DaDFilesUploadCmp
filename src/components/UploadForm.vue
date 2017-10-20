@@ -14,16 +14,22 @@
               Перенесите сюда файлы или кликните, чтобы их выбрать 
           </strong>
       </label>
+
+      <uploads v-if="files.length"/>
   </div>
 </template>
 
 <script>
+import Uploads from './Uploads'
 export default {
   data() {
     return {
       files: [],
       isDraggedOver: false
     };
+  },
+  components: {
+    Uploads,
   },
   methods: {
     enter() {
